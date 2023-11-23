@@ -16,18 +16,21 @@ module.exports = function (config) {
     client: {
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
+    reporters: ['progress', 'kjhtml', 'coverage'],
     coverageIstanbulReporter: {
-      dir: require('path').join(__dirname, './coverage/angular-karma-jasmine'),
-      reports: ['html', 'lcovonly', 'text-summary'],
+      dir: require('path').join(__dirname, './coverage'),
+      reports: ['html', 'lcovonly', 'cobertura'],
       fixWebpackSourcePaths: true
     },
-    reporters: ['progress', 'kjhtml', 'coverage'],
     coverageReporter: {
       dir: require('path').join(__dirname, '../coverage'),
-      reporters: [
-        { type: 'html', subdir: 'report-html' },
-        { type: 'lcov', subdir: 'report-lcov' }
-      ]
+      reporters: ['html', 'lcovonly', 'cobertura']
+    },
+    preprocessors: {
+      // source files, that you wanna generate coverage for
+      // do not include tests or libraries
+      // (these files will be instrumented by Istanbul)
+      'src/**/*.ts': ['coverage']
     },
     port: 9876,
     colors: true,
